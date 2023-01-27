@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: com.photosian
+testFramework: junit
+sourceLanguage: kotlin
+buildTool: gradle_kotlin
+features: [annotation-api, app-name, aws-lambda, gradle, jackson-databind, junit, kotlin, kotlin-application, kotlin-build, logback, micronaut-build, readme, shade, x86, yaml]
