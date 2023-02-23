@@ -7,29 +7,29 @@ jobs:
   build-gradle-project:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout project sources
-      uses: actions/checkout@v2
-    - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2
-    - name: Run build with Gradle Wrapper
-      run: ./gradlew shadowJar
-    - name: Upload file to bucket
-      uses: zdurham/s3-upload-github-action@master
-      with:
-        args: --acl public-read
-      env:
-        FILE: ./build/libs/photosian-0.1-all.jar
-        AWS_REGION: 'eu-north-1'
-        S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-        S3_KEY: photosian.jar
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    - name: Update Lambda from S3
-      uses: jakejarvis/update-lambda-from-s3@v1.0.0
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: eu-north-1
-        s3-bucket-name: ${{ secrets.AWS_S3_BUCKET }}
-        s3-zip-file-name: photosian.jar
-        lambda-function-name: photosian
+      - name: Checkout project sources
+        uses: actions/checkout@v2
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+      - name: Run build with Gradle Wrapper
+        run: ./gradlew shadowJar
+      - name: Upload file to bucket
+        uses: zdurham/s3-upload-github-action@master
+        with:
+          args: --acl public-read
+        env:
+          FILE: ./build/libs/photosian-0.1-all.jar
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          S3_KEY: photosian.jar
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Update Lambda from S3
+        uses: rotarydialer/update-lambda-s3@main
+        env:
+          LAMBDA_NAME: photosian
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_S3_KEY: photosian.jar
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
