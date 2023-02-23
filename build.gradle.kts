@@ -18,6 +18,7 @@ repositories {
 
 dependencies {
     annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+    implementation("io.micronaut.aws:micronaut-aws-apigateway")
     implementation("io.micronaut.serde:micronaut-serde-jackson")
     implementation("com.amazonaws:aws-java-sdk-s3:1.12.394")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
