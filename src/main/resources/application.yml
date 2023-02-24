@@ -1,3 +1,6 @@
 micronaut:
   application:
     name: photosian
+  server:
+    cors:
+      enabled: true
